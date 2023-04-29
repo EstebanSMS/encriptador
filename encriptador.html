@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html>
+    <head lang="es">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Encriptador ED</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="estilos.css">
+    </head>
+
+    <body>
+        <header>
+            <div>
+                <img src="imagenes/Logo.png" alt="logo-alura" class="logo">
+            </div>
+
+        </header>
+        <main>
+            <div class="caja">
+                <textarea id="texto" placeholder="Ingrese el texto aquí" pattern="^[a-zA-Z\s]*$"></textarea>
+                <!-- <input type="text" id="texto" value="Ingrese el texto aquí"> -->
+            </div>
+
+            <div class="container">
+                <img src="imagenes/Muñeco.png" id="imagen-muneco" alt="Muñeco buscador" class="muneco"> 
+                <h1 id="mensaje-no-encontrado" class="textmen" >Ningún mensaje fue<br> encontrado</h1>
+                <h1 id="mensaje-ingreso" class="texting">Ingresa el texto que desees encriptar o<br> desencriptar.</h1>
+                <textarea id="texto-desencriptado" class="textresult" style="display: none;" readonly></textarea>
+                <button id="boton-copiar" class="copy">Copiar</button>
+            </div>                      
+
+            <div class="nota"> 
+                <p>Solo letras minúsculas y sin acentos porfavor</p>
+            </div>
+            <div class="boton">
+                <button id="encriptar" class="encrip" onclick="ocultarelementos()">
+                    <h1>Encriptar</h1>
+                </button>
+                <button id="desencriptar" class="desencrip" onclick="ocultarelementos()">
+                    <h1>Desencriptar</h1>
+                </button>
+            </div>  
+        </main>
+        <footer class="rodapie">
+            <p>&copy Copyrihgt - Desarrollado por Esteban Muñoz - 2023</p>
+            <p>Quito, Ecuador</p>
+        </footer> 
+        <script>
+            function ocultarelementos() {
+                var imagenmuneco = document.getElementById("imagen-muneco");
+                var textoDesencriptado = document.getElementById("texto-desencriptado");
+                var mensajeNoEncontrado = document.getElementById("mensaje-no-encontrado");
+                var mensajeIngreso = document.getElementById("mensaje-ingreso");
+                var botonCopiar = document.getElementById("boton-copiar");
+                var textoingreso = document.getElementById("texto");
+                
+                if (textoingreso.value === "") {
+                    imagenmuneco.style.display = "inline";
+                    textoDesencriptado.style.display = "none";
+                    mensajeNoEncontrado.style.display = "block";
+                    mensajeIngreso.style.display = "block";
+                    botonCopiar.style.display = "none";
+                } else {
+                    imagenmuneco.style.display = "none";
+                    textoDesencriptado.style.display = "inline";
+                    mensajeNoEncontrado.style.display = "none";
+                    mensajeIngreso.style.display = "none";
+                    botonCopiar.style.display = "inline";
+                }
+            }
+            
+            function encriptarTexto(texto) {
+                var textoEncriptado = texto.replace(/e/g, "enter");
+                textoEncriptado = textoEncriptado.replace(/i/g, "imes");
+                textoEncriptado = textoEncriptado.replace(/a/g, "ai");
+                textoEncriptado = textoEncriptado.replace(/o/g, "ober");
+                textoEncriptado = textoEncriptado.replace(/u/g, "ufat");
+                return textoEncriptado;
+            }
+
+            function desencriptarTexto(textoEncriptado) {
+                var texto = textoEncriptado.replace(/ufat/g, "u");
+                texto = texto.replace(/ober/g, "o");
+                texto = texto.replace(/ai/g, "a");
+                texto = texto.replace(/imes/g, "i");
+                texto = texto.replace(/enter/g, "e");
+                return texto;
+            }
+
+            // Obtener referencias a los elementos HTML necesarios
+            var inputTexto = document.getElementById("texto");
+            var botonEncriptar = document.getElementById("encriptar");
+            var botonDesencriptar = document.getElementById("desencriptar");
+            var resultado = document.getElementById("texto-desencriptado");
+
+            // Agregar un controlador de eventos al botón "Encriptar"
+            botonEncriptar.addEventListener("click", function() {
+                var texto = inputTexto.value;
+                var textoEncriptado = encriptarTexto(texto);
+                resultado.value = textoEncriptado;
+            });
+
+            // Agregar un controlador de eventos al botón "Desencriptar"
+            botonDesencriptar.addEventListener("click", function() {
+                var textoEncriptado = inputTexto.value;
+                var texto = desencriptarTexto(textoEncriptado);
+                resultado.value = texto;
+            });
+
+            function copy() {
+                let copyText = document.querySelector("#texto-desencriptado");
+                copyText.select();
+                document.execCommand("copy");
+            }
+            
+            document.querySelector("#boton-copiar").addEventListener("click", copy);
+
+            // Obtener el elemento de textarea y agregar un escuchador de eventos 'input'
+            const textarea = document.getElementById('texto');
+            textarea.addEventListener('input', function() {
+            // Obtener el texto actual dentro del textarea
+            const texto = textarea.value;
+            // Convertir el texto a minúsculas y establecer el valor del textarea
+            textarea.value = texto.toLowerCase();
+            });
+
+        </script> 
+    </body>
+</html>
+
+
+  
+
+
+
